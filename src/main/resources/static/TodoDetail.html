@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO Item detail</title>
+</head>
+
+<script>
+
+    function loadItem() {
+
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        var id = document.getElementById("id").value;
+
+        fetch("http://localhost:8080/todo/"+id, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                console.log("result.item: " + result.item);
+                console.log("result.done: " + result.done);
+                document.getElementById("text").value = result.item;
+                document.getElementById("done").checked = result.done;
+
+            })
+            .catch(error => console.log('error', error));
+
+    }
+
+</script>
+
+<body>
+    <div>
+
+        <textarea id="text" cols="40" rows="4">
+        </textarea>
+        <input id="done" type="checkbox">
+        <label for="done">Is Completed</label>
+        <br>
+        <input id="id" type="text">
+        <button id="load-button" onclick="loadItem()">Load TODO Item</button>
+    </div>
+</body>
+</html>
